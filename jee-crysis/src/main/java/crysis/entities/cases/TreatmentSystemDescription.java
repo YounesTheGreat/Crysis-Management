@@ -1,4 +1,4 @@
-package crysis.entities;
+package crysis.entities.cases;
 
 import java.util.List;
 

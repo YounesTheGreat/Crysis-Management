@@ -1,4 +1,4 @@
-package crysis.entities;
+package crysis.entities.cases;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
