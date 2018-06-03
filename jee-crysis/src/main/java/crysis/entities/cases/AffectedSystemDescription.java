@@ -1,7 +1,9 @@
 package crysis.entities.cases;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,14 +21,20 @@ public class AffectedSystemDescription {
 	
 	private String fullDescription;
 	
-	@OneToMany(mappedBy="affectedSystemDescription")
-	private List<AffectedHuman> affectedHumans; 
+	@OneToMany(mappedBy="affectedSystemDescription", cascade=CascadeType.ALL)
+	private List<AffectedHuman> affectedHumans = new ArrayList<>(); 
 	
-	@OneToMany(mappedBy="affectedSystemDescription")
-	private List<AffectedMaterial> affectedMaterials;
+	@OneToMany(mappedBy="affectedSystemDescription", cascade=CascadeType.ALL)
+	private List<AffectedMaterial> affectedMaterials = new ArrayList<>();
 	
 	public AffectedSystemDescription() {}
 
+	/** Important */
+	public void addAffectedHuman(AffectedHuman human) {
+		human.setAffectedSystemDescription(this);
+		affectedHumans.add(human);
+	}
+	
 	public String getFullDescription() {
 		return fullDescription;
 	}

@@ -2,6 +2,7 @@ package crysis.entities.system;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -20,11 +21,18 @@ public class AffectedHuman {
 	private String lastName;
 	private Date birthDate;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private AffectedSystemDescription affectedSystemDescription;
 	
 	public AffectedHuman() {}
 	
+	public AffectedHuman(String cIN, String firstName, String lastName, Date birthDate) {
+		setCIN(cIN);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setBirthDate(birthDate);
+	}
+
 	public String getCIN() {
 		return CIN;
 	}
@@ -48,6 +56,14 @@ public class AffectedHuman {
 	}
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public AffectedSystemDescription getAffectedSystemDescription() {
+		return affectedSystemDescription;
+	}
+
+	public void setAffectedSystemDescription(AffectedSystemDescription affectedSystemDescription) {
+		this.affectedSystemDescription = affectedSystemDescription;
 	}
 	
 }

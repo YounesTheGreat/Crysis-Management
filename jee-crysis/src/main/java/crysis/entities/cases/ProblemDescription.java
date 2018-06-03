@@ -14,10 +14,10 @@ public class ProblemDescription {
 	@GeneratedValue
 	private Long idProblemDescription;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL)
 	private AffectedSystemDescription affectedSystemDescription;
 	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(cascade=CascadeType.ALL)
 	private DisasterDescription disasterDescription;
 
 	

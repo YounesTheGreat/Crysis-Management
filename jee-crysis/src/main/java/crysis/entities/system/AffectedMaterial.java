@@ -1,5 +1,6 @@
 package crysis.entities.system;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,8 +18,9 @@ public class AffectedMaterial {
 	@GeneratedValue
 	private Long idMaterial;
 	private String name;
+	private String damageDescription;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private AffectedSystemDescription affectedSystemDescription;
 	
 	public AffectedMaterial() {}
@@ -35,5 +37,22 @@ public class AffectedMaterial {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getDamageDescription() {
+		return damageDescription;
+	}
+
+	public void setDamageDescription(String damageDescription) {
+		this.damageDescription = damageDescription;
+	}
+
+	public AffectedSystemDescription getAffectedSystemDescription() {
+		return affectedSystemDescription;
+	}
+
+	public void setAffectedSystemDescription(AffectedSystemDescription affectedSystemDescription) {
+		this.affectedSystemDescription = affectedSystemDescription;
+	}
+
 	
 }

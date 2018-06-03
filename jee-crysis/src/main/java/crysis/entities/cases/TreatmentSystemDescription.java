@@ -14,6 +14,8 @@ public class TreatmentSystemDescription {
 	@GeneratedValue
 	private Long idTsd;
 	
+	private String fullDescription;
+	
 	@OneToMany(mappedBy="treatmentSystemDescription")
 	private List<Phase> phases;
 
@@ -34,6 +36,14 @@ public class TreatmentSystemDescription {
 
 	public void setIdTsd(Long idTsd) {
 		this.idTsd = idTsd;
+	}
+
+	public String getFullDescription() {
+		return fullDescription;
+	}
+
+	public void setFullDescription(String fullDescription) {
+		this.fullDescription = fullDescription;
 	}
 
 }
