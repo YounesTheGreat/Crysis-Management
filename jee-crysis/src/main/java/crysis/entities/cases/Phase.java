@@ -15,8 +15,15 @@ public class Phase {
 	@ManyToOne
 	private TreatmentSystemDescription treatmentSystemDescription;
 
-	
-	public Phase() {}
+	/**
+	 * Attention ! Ici forEach new added Phase in the List of 
+	 * TreatmentSystemDescription i must set the reference 
+	 * in this object to avoid null pointer exception
+	 */
+	public Phase() {
+		/* A remplacer plus tard avec setTreatlentDescription() */
+		//treatmentSystemDescription = new TreatmentSystemDescription();
+	}
 	
 	public TreatmentSystemDescription getTreatmentSystemDescription() {
 		return treatmentSystemDescription;

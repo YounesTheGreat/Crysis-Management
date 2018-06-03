@@ -22,12 +22,15 @@ public class AffectedSystemDescription {
 	private String fullDescription;
 	
 	@OneToMany(mappedBy="affectedSystemDescription", cascade=CascadeType.ALL)
-	private List<AffectedHuman> affectedHumans = new ArrayList<>(); 
+	private List<AffectedHuman> affectedHumans;
 	
 	@OneToMany(mappedBy="affectedSystemDescription", cascade=CascadeType.ALL)
-	private List<AffectedMaterial> affectedMaterials = new ArrayList<>();
+	private List<AffectedMaterial> affectedMaterials;
 	
-	public AffectedSystemDescription() {}
+	public AffectedSystemDescription() {
+		affectedHumans = new ArrayList<>(); 
+		affectedMaterials = new ArrayList<>();
+	}
 
 	/** Important */
 	public void addAffectedHuman(AffectedHuman human) {

@@ -21,7 +21,7 @@ public class AffectedHuman {
 	private String lastName;
 	private Date birthDate;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private AffectedSystemDescription affectedSystemDescription;
 	
 	public AffectedHuman() {}

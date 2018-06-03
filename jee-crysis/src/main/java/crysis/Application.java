@@ -17,6 +17,7 @@ import crysis.entities.cases.DisasterDescription;
 import crysis.entities.cases.ProblemDescription;
 import crysis.entities.system.AffectedHuman;
 import crysis.entities.system.Victim;
+import crysis.services.ICasesService;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -24,6 +25,9 @@ public class Application  implements CommandLineRunner{
 
 	@Autowired
 	CasesRepository casesRepository;
+	
+	@Autowired
+	ICasesService casesService;
 	
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Application.class, args);
@@ -38,6 +42,47 @@ public class Application  implements CommandLineRunner{
 		testCasesInsert();
 		testCasesInsert_withAffectedSys();
 		testRetrieveCase_withAffectedSys();
+		
+		testCaseServices_createCase();
+		
+		testCasesService_addAffectedHuman();
+	}
+
+	private void testCasesService_addAffectedHuman() {
+		Long idCase = casesService.createCase("DisasterDescription2", 100, 200);
+
+		casesService.addAffectedHuman(idCase, "CIN3", "", "", new Date(), "Victim");
+		casesService.addAffectedHuman(idCase, "H003D", "Gary", "SpongeBob",
+				new Date(), "CivilianSociety");
+		casesService.addAffectedHuman(idCase, "H045D", "Steve", "Carlos",
+				new Date(), "CivilianSociety");
+		
+		Case retrievedCase = casesService.findCaseById(idCase);
+		retrievedCase.getProblemDescription()
+			.getAffectedSystemDescription()
+			.getAffectedHumans().forEach(System.out::println);
+		
+		if (retrievedCase.getProblemDescription()
+				.getAffectedSystemDescription()
+				.getAffectedHumans().size() == 3) {
+			System.out.println("OK - Service Add Affected Human");
+		} else {
+			System.out.println("NOT OK - Service Add Affected Human");
+		}
+	}
+
+	private void testCaseServices_createCase() {
+		System.out.println(casesService);		
+		Long idCase = casesService.createCase("DisasterDescription", 10, 20);
+		Case retrievedCase = casesService.findCaseById(idCase);
+		DisasterDescription disasterDescription = retrievedCase.getProblemDescription()
+				.getDisasterDescription();
+		if (disasterDescription.getDescription().equals("DisasterDescription")
+				&& disasterDescription.getLongitude() == (10)) {
+			System.out.println("OK - Create Case  - from Service");
+		} else {
+			System.out.println("NOT  OK - Creaet Case -  from Service ");
+		}
 	}
 	
 	public void testCasesInsert() {
@@ -109,6 +154,11 @@ public class Application  implements CommandLineRunner{
 				System.out.println("OK - Retrieve with Affected Sys");
 		} else 
 			System.out.println("NOT OK - Retrieve with Affected Sys");
+	}
+	
+	
+	public void testCreateCase() {
+		
 	}
 	
 }

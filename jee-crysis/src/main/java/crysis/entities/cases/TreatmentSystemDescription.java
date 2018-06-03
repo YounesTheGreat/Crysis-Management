@@ -1,5 +1,6 @@
 package crysis.entities.cases;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -20,7 +21,9 @@ public class TreatmentSystemDescription {
 	private List<Phase> phases;
 
 	
-	public TreatmentSystemDescription() {}
+	public TreatmentSystemDescription() {
+		phases = new ArrayList<>();
+	}
 	
 	public List<Phase> getPhases() {
 		return phases;

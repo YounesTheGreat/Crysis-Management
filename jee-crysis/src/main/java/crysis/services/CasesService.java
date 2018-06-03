@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import crysis.dao.CasesRepository;
+import crysis.entities.cases.AffectedSystemDescription;
 import crysis.entities.cases.Case;
 import crysis.entities.cases.DisasterDescription;
 import crysis.entities.cases.ProblemDescription;
@@ -64,9 +64,9 @@ public class CasesService implements ICasesService {
 					? new Victim(CIN, firstName, lastName, birthDate)  
 					: new CivilianSociety(CIN, firstName, lastName, birthDate);
 				
-			myCase.getProblemDescription()
-				.getAffectedSystemDescription()
-				.getAffectedHumans().add(affHumanSys);
+			ProblemDescription problemDescription = myCase.getProblemDescription();
+			AffectedSystemDescription asd = problemDescription.getAffectedSystemDescription();
+			asd.addAffectedHuman(affHumanSys);
 			
 			casesRepository.save(myCase);
 		}

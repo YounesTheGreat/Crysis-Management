@@ -1,5 +1,7 @@
 package crysis.web;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +18,28 @@ import crysis.entities.cases.AffectedSystemDescription;
 import crysis.entities.cases.Case;
 import crysis.entities.cases.DisasterDescription;
 import crysis.entities.cases.ProblemDescription;
-import crysis.services.CasesService;
+import crysis.services.ICasesService;
 
 @RestController
 @RequestMapping("/cases")
 public class CasesController {
 
 	@Autowired
-	CasesService casesService;
+	ICasesService casesService;
 	
 	private static final Logger log = LoggerFactory.getLogger(CasesController.class);
 	
     public void firstTest() {
-		Long idCase = casesService.createCase("Disaster Description", 0.456, 172.04);
-		/*casesService.addAffectedHuman(idCase, "AD213", "Younes", "Kasri",
+		
+    	Long idCase = casesService.createCase("Disaster Description", 0.456, 172.04);
+		
+    	casesService.addAffectedHuman(idCase, "AD213", "Younes", "Kasri",
 				new Date(1996, 10-1, 25), "Victim");
-		casesService.addAffectedHuman(idCase, "H003D", "Gary", "SpongeBob",
-				new Date(1999, 2-1, 10), "CivilianSociety");*/
-		casesService.updateDisasterDescription(idCase, "new Disaster Description", 120.245, 120.888);
+		
+    	casesService.addAffectedHuman(idCase, "H003D", "Gary", "SpongeBob",
+				new Date(1999, 2-1, 10), "CivilianSociety");
+		
+    	casesService.updateDisasterDescription(idCase, "new Disaster Description", 120.245, 120.888);
 		
 		Case myCase = casesService.findCaseById(idCase);
 		if (myCase == null) 
@@ -50,15 +56,16 @@ public class CasesController {
 			
 			if (affectedSysDesc.getAffectedHumans().size()==2)
 				System.out.println("OK - 2");
-			//assertEquals(affectedSysDesc.getAffectedHumans().size(),2);
 			
-			/*affectedSysDesc.getAffectedHumans().forEach((human)->{
+			affectedSysDesc.getAffectedHumans().forEach((human)->{
 				if (human.getCIN().equals("AD213")) {
-					assertThat(human.getClass().getSimpleName()).isEqualTo("Victim");
-				} else if (human.getCIN().equals("")) {
-					assertThat(human.getClass().getSimpleName()).isEqualTo("CivilianSociety");
+					if(human.getClass().getSimpleName().equals("Victim"))
+						System.out.println("OK - className");
+				} else if (human.getCIN().equals("H003D")) {
+					if(human.getClass().getSimpleName().equals("CivilianSociety"))
+						System.out.println("OK - 3");
 				}
-			});*/
+			});
 		}
     }
 

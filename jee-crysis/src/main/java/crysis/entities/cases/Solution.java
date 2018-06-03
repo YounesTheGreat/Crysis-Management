@@ -17,7 +17,9 @@ public class Solution {
 	private TreatmentSystemDescription treatmentSystemDescription;
 
 	
-	public Solution() {}
+	public Solution() {
+		treatmentSystemDescription = new TreatmentSystemDescription();
+	}
 	
 	public TreatmentSystemDescription getTreatmentSystemDescription() {
 		return treatmentSystemDescription;

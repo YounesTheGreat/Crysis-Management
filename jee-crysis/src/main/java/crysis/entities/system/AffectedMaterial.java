@@ -20,7 +20,7 @@ public class AffectedMaterial {
 	private String name;
 	private String damageDescription;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private AffectedSystemDescription affectedSystemDescription;
 	
 	public AffectedMaterial() {}

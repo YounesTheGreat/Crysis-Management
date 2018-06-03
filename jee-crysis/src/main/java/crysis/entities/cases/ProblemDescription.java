@@ -21,7 +21,10 @@ public class ProblemDescription {
 	private DisasterDescription disasterDescription;
 
 	
-	public ProblemDescription() {}
+	public ProblemDescription() {
+		affectedSystemDescription = new AffectedSystemDescription();
+		disasterDescription = new DisasterDescription();
+	}
 	
 	public AffectedSystemDescription getAffectedSystemDescription() {
 		return affectedSystemDescription;

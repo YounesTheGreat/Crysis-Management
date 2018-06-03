@@ -19,11 +19,15 @@ public class Case {
 	@OneToOne(cascade=CascadeType.ALL)
 	private ProblemDescription problemDescription;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,
+			CascadeType.DETACH, CascadeType.REMOVE})
 	private Solution solution;
 
 	
-	public Case() {}	
+	public Case() {
+		problemDescription = new ProblemDescription();
+		solution = new Solution();
+	}	
 	
 	public ProblemDescription getProblemDescription() {
 		return problemDescription;
