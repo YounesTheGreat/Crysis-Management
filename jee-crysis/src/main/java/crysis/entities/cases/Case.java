@@ -2,10 +2,17 @@ package crysis.entities.cases;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Case {
+
+	@Id
+	@GeneratedValue
+	private Long idCase;
+	
 
 	@OneToOne(cascade=CascadeType.ALL)
 	private ProblemDescription problemDescription;
@@ -32,6 +39,13 @@ public class Case {
 		this.solution = solution;
 	}
 	
-	
+	public Long getIdCase() {
+		return idCase;
+	}
+
+	public void setIdCase(Long idCase) {
+		this.idCase = idCase;
+	}
+
 	
 }

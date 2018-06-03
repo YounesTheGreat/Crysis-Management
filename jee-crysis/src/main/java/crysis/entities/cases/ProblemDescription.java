@@ -3,11 +3,17 @@ package crysis.entities.cases;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class ProblemDescription {
 
+	@Id
+	@GeneratedValue
+	private Long idProblemDescription;
+	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private AffectedSystemDescription affectedSystemDescription;
 	
@@ -31,6 +37,16 @@ public class ProblemDescription {
 
 	public void setDisasterDescription(DisasterDescription disasterDescription) {
 		this.disasterDescription = disasterDescription;
+	}
+
+	public Long getIdProblemDescription() {
+		return idProblemDescription;
+	}
+
+	public void setIdProblemDescription(Long idProblemDescription) {
+		this.idProblemDescription = idProblemDescription;
 	}	
+	
+	
 	
 }
