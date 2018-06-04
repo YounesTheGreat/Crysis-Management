@@ -1,110 +1,70 @@
 package crysis.web;
 
-import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import crysis.entities.cases.AffectedSystemDescription;
 import crysis.entities.cases.Case;
-import crysis.entities.cases.DisasterDescription;
-import crysis.entities.cases.ProblemDescription;
 import crysis.services.ICasesService;
 
-@RestController
+@Controller
 @RequestMapping("/cases")
 public class CasesController {
 
+	protected Logger logger = LoggerFactory.getLogger( getClass() );
+	
 	@Autowired
 	ICasesService casesService;
 	
-	private static final Logger log = LoggerFactory.getLogger(CasesController.class);
-	
-    public void firstTest() {
-		
-    	Long idCase = casesService.createCase("Disaster Description", 0.456, 172.04);
-		
-    	casesService.addAffectedHuman(idCase, "AD213", "Younes", "Kasri",
-				new Date(1996, 10-1, 25), "Victim");
-		
-    	casesService.addAffectedHuman(idCase, "H003D", "Gary", "SpongeBob",
-				new Date(1999, 2-1, 10), "CivilianSociety");
-		
-    	casesService.updateDisasterDescription(idCase, "new Disaster Description", 120.245, 120.888);
-		
-		Case myCase = casesService.findCaseById(idCase);
-		if (myCase == null) 
-			System.out.println("NOT FOUND - idCase = "+idCase);
-		else {
-			ProblemDescription probDesc = myCase.getProblemDescription();
-			DisasterDescription disasterDesc = probDesc.getDisasterDescription();
-			AffectedSystemDescription affectedSysDesc = probDesc.getAffectedSystemDescription();
-				
-			if (disasterDesc.getLatitude() == 120.245)
-				if(disasterDesc.getLongitude() ==120.888)
-					if(disasterDesc.getDescription().equals("new Disaster Description"))
-						System.out.println("OK - Retrieve Disaster Desc");
-			
-			if (affectedSysDesc.getAffectedHumans().size()==2)
-				System.out.println("OK - 2");
-			
-			affectedSysDesc.getAffectedHumans().forEach((human)->{
-				if (human.getCIN().equals("AD213")) {
-					if(human.getClass().getSimpleName().equals("Victim"))
-						System.out.println("OK - className");
-				} else if (human.getCIN().equals("H003D")) {
-					if(human.getClass().getSimpleName().equals("CivilianSociety"))
-						System.out.println("OK - 3");
-				}
-			});
-		}
-    }
-
-    @GetMapping("/")
-	public Case index() {
-    	firstTest();
-    	System.out.println("Holalalalalalalal");
-		return new Case();
+    @RequestMapping("/cases")
+	public String index(Model model) {
+    	List<Case> cases = casesService.findAll();
+    	model.addAttribute(cases);
+    	return "cases";
 	}
 	
-	@GetMapping("/new")
+	@RequestMapping("/new")
 	public String newForm() {
-		return null;
+		return "new-case";
 	}
 	
-	@PostMapping("/")
-	public String create() {
-		return null;
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(String disasterDescription, double longitude, double latitude) {
+		Long idCase = casesService.createCase(disasterDescription, longitude, latitude);
+		return "redirect:/cases/"+idCase;
 	}
 	
-	@GetMapping("/{id}")
-	public String show(Model model, @PathVariable("id") Long id) {
-		return null;
+	@RequestMapping("/{id}")
+	public String show(Model model, @PathVariable("id") Long idCase) {
+		Case myCase = casesService.findCaseById(idCase);
+		model.addAttribute("case", myCase);
+		return "show-case";
 	}
 	
 	
-	@GetMapping("/{id}/edit")
+	@RequestMapping("/{id}/edit")
 	public String edit(Model model, @PathVariable("id") Long id) {
 		return null;
 	}
 	
-	@PatchMapping("/{id}")
+	@RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
 	public String update(Model model, @PathVariable("id") Long id, String title, String description) {
 		return null;
 	}
 
-	@DeleteMapping("/{id}")
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public String destroy(Model model, @PathVariable("id") Long id) {
 		return null;
 	}
 	
+	/* Lorsque je veux factoriser avec @RequestMapping on my controler class. @PostMapping etc.. don't work well 
+	 * That's why i used classic @RequestMapping on methods instead  
+	 */
 }

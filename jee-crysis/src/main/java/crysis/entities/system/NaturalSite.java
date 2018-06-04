@@ -5,23 +5,32 @@ import javax.persistence.Entity;
 @Entity
 public class NaturalSite extends AffectedMaterial {
 
-	private Long longitude, latitude;
+	private double longitude, latitude;
 
 	public NaturalSite() {}
 	
-	public Long getLatitude() {
+	public NaturalSite(String name, String damageDescription) {
+		super(name, damageDescription);
+	}
+	public NaturalSite(String name, String damageDescription, double longitude, double latitude) {
+		super(name, damageDescription);
+		setLongitude(longitude);
+		setLatitude(latitude);
+	}
+
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
-	public Long getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	

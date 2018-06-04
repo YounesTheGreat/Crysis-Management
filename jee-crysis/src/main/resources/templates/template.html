@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:fragment="head">
+	<title>Crysis Management</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<style type="text/css">
+		.bg-lightGray {
+			background-color: #DDD !important;
+			border-color: #DDD !important;
+		}
+	</style>
+</head>
+<body>
+
+<!-- Grey with black text -->
+<div th:fragment="navbar">
+	<nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center">
+	  <ul class="navbar-nav">
+	    <li class="nav-item pr-2">
+	      <a class="nav-link text-light btn-dark rounded" href="#">Expert Interface</a>
+	    </li>
+	    <li class="nav-item pr-2">
+	      <a class="nav-link text-light btn-dark rounded" href="#">Disaster Management Support</a>
+	    </li>
+	    <li class="nav-item pr-2">
+	      <a class="nav-link text-light btn-dark rounded" href="#">About</a>
+	    </li>
+	    <li class="nav-item pr-2">
+	      <a class="nav-link text-light btn-dark rounded" href="#">Contact</a>
+	    </li>
+	  </ul>
+	</nav>
+</div>
+
+		<div class="col-sm-3"	th:fragment="sidebar">
+			<div class="container-fluid">
+				<div class="card">
+					<div class="card-header">
+						<form>
+							<button class="btn btn-secondary btn-block">Deconnexion</button>
+						</form>
+					</div>
+					<div class="card-body">
+						Current User <label class="text-secondary font-weight-bold">Younes Kasri</label>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						<button class="btn btn-secondary btn-block">Highlights</button>						
+					</div>
+					<div class="card-body">
+						<a class="text-secondary font-weight-bold">Japon : séisme au large de Fukushima, ressenti à Tokyo, pas de tsunami</a>
+						<p>Un séisme de magnitude 5,8 selon le centre américain USGS s'est produit jeudi matin au large de Fukushima, entraînant des secousses importantes ressenties dans un large périmètre, dont Tokyo. </p>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header">
+						<button class="btn btn-secondary btn-block">Contact Info</button>						
+					</div>
+					<div class="card-body">
+						<img class="img-fluid rounded" src="http://www.clker.com/cliparts/3/0/s/5/z/t/world-map-vector-grey.svg">
+						<div>Phone <label class="text-secondary font-weight-bold">+212 646 00 00 00</label></div>
+						<div>Email <label class="text-secondary ">youneskasri@gmail.com</label></div>
+						<div>Address <label class="text-secondary">Department of State
+							2050 Bamako Place
+							Washington, DC 20521-2050</label></div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!-- New Crysis Case Modal -->
+<div th:fragment="newCaseModal">
+	<div class="modal fade" id="newCaseModal">
+	 <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header bg-lightGray">
+	          <h4 class="modal-title">New Crysis Case</h4>
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          <form th:action="@{/cases}" method="post">
+	          	<div class="form-group">
+	          		<label>Disaster Description</label>
+	          		<input type="text" name="disasterDescription" class="form-control">
+	          	</div>
+	           	<div class="form-group">
+	          		<label>Longitude</label>
+	          		<input type="text" name="longitude" class="form-control">
+	          	</div>
+	          	<div class="form-group">
+	          		<label>Latitude</label>
+	          		<input type="text" name="latitude" class="form-control">
+	          	</div>
+	          	<button type="submit" class="float-right btn btn-lg btn-light bg-lightGray">
+	          		Next
+	          	</button>
+	          </form>
+	        </div>        
+	      </div>
+	 </div>
+	</div>
+</div>
+
+<div th:fragment="scripts">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

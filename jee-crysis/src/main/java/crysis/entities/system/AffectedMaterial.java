@@ -1,6 +1,5 @@
 package crysis.entities.system;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,6 +24,14 @@ public class AffectedMaterial {
 	
 	public AffectedMaterial() {}
 	
+	
+	public AffectedMaterial(String name, String damageDescription) {
+		super();
+		this.name = name;
+		this.damageDescription = damageDescription;
+	}
+
+
 	public Long getIdMaterial() {
 		return idMaterial;
 	}

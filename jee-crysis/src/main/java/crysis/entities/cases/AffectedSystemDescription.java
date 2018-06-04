@@ -37,6 +37,10 @@ public class AffectedSystemDescription {
 		human.setAffectedSystemDescription(this);
 		affectedHumans.add(human);
 	}
+	public void addAffectedMaterial(AffectedMaterial affectedMaterial) {
+		affectedMaterial.setAffectedSystemDescription(this);
+		affectedMaterials.add(affectedMaterial);
+	}
 	
 	public String getFullDescription() {
 		return fullDescription;

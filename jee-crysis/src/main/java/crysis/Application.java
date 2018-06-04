@@ -36,16 +36,31 @@ public class Application  implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Hello World ..");
-		Case myCase = casesRepository.save(new Case());
-		System.out.println(myCase.getIdCase());
 		
+		/* Tests DAO */
 		testCasesInsert();
 		testCasesInsert_withAffectedSys();
 		testRetrieveCase_withAffectedSys();
 		
+		/* Tests Facade Service */
 		testCaseServices_createCase();
-		
 		testCasesService_addAffectedHuman();
+		testCasesService_addAffectedMaterial();
+	}
+
+	private void testCasesService_addAffectedMaterial() {
+		Long idCase = casesService.createCase("Blabla", 1000, 1000);
+		casesService.addAffectedMaterial(idCase,"BMW 220", "pare brise endommagé", "Good");
+		casesService.addAffectedMaterial(idCase, "Sawma3at Hassan", "ta7et", "NaturalSite");
+	
+		Case myCase = casesService.findCaseById(idCase);
+		AffectedSystemDescription affectedSystemDescription = myCase.getProblemDescription().getAffectedSystemDescription();
+		if (affectedSystemDescription.getAffectedMaterials().size() == 2 ) {
+			affectedSystemDescription.getAffectedMaterials().forEach(System.out::println);
+			System.out.println("OK - CaseService Test addAffectedMaterial");
+		}else {
+			System.out.println("NOT OK - CaseService Test addAffectedMaterial");
+		}
 	}
 
 	private void testCasesService_addAffectedHuman() {
@@ -156,9 +171,5 @@ public class Application  implements CommandLineRunner{
 			System.out.println("NOT OK - Retrieve with Affected Sys");
 	}
 	
-	
-	public void testCreateCase() {
-		
-	}
 	
 }

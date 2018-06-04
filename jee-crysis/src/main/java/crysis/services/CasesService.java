@@ -1,6 +1,7 @@
 package crysis.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import crysis.entities.cases.ProblemDescription;
 import crysis.entities.system.AffectedHuman;
 import crysis.entities.system.AffectedMaterial;
 import crysis.entities.system.CivilianSociety;
+import crysis.entities.system.Good;
+import crysis.entities.system.NaturalSite;
 import crysis.entities.system.Victim;
 
 @Service
@@ -73,18 +76,21 @@ public class CasesService implements ICasesService {
 	}
 
 	@Override
-	public void addAffectedMaterial(Long idCase, String materialName, String materialDamageDescription) {
+	public void addAffectedMaterial(Long idCase, String materialName, 
+			String materialDamageDescription, String goodOrNaturalSite) {
 		Optional<Case> opt = casesRepository.findById(idCase);
 		if (opt.isPresent()) {
 			Case myCase = opt.get();
 			
-			AffectedMaterial affectedMaterial = new AffectedMaterial();
-			affectedMaterial.setName(materialName);
-			affectedMaterial.setDamageDescription(materialDamageDescription);
-			
+			AffectedMaterial affectedMaterial = goodOrNaturalSite.equalsIgnoreCase("Good")?
+					new Good(materialName, materialDamageDescription)
+					: goodOrNaturalSite.equalsIgnoreCase("NaturalSite")?
+							new NaturalSite(materialName, materialDamageDescription)
+							: new AffectedMaterial(materialName, materialDamageDescription);
+							
 			myCase.getProblemDescription()
 				.getAffectedSystemDescription()
-				.getAffectedMaterials().add(affectedMaterial);
+				.addAffectedMaterial(affectedMaterial);
 			
 			casesRepository.save(myCase);
 		}
@@ -98,6 +104,11 @@ public class CasesService implements ICasesService {
 			myCase = opt.get();
 		}
 		return myCase;
+	}
+
+	@Override
+	public List<Case> findAll() {
+		return casesRepository.findAll();
 	}
 
 	
